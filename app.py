@@ -381,7 +381,7 @@ def generate_batch_markdown():
                             chosen_subs.append(k)
 
                 date_tag = datetime.datetime.now().strftime("%m%d")
-                suffix = f"{date_tag}{user_tag}|881比鸭"
+                suffix = f"{date_tag}{user_tag}|881比鸭DKC"
                 title = f"{pk} - {app_fixed} - {url_fixed} - {'-'.join(chosen_subs)} - {suffix}"
 
                 # Folder: stt - từ khóa chính
