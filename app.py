@@ -310,6 +310,7 @@ TEMPLATES = [
 感谢您的支持，我们会持续优化，提供最优质的服务体验！
 """
 ]
+
 def sanitize_filename(text):
     return re.sub(r'[\\/*?:"<>|]', "_", text)
 
@@ -325,6 +326,7 @@ def generate_md_content(title, keyword_list, domain_link, app, url):
         app=app,
         url=url
     )
+
 @app.route("/generate_batch", methods=["POST"])
 def generate_batch_markdown():
     try:
@@ -334,7 +336,7 @@ def generate_batch_markdown():
 
         primary_keywords = data.get("primary_keywords")
         sub_keywords = data.get("sub_keywords")
-        user_tag = data.get("user_tag", "").strip()  # kí hiệu user nhập vào
+        user_tag = data.get("user_tag", "").strip()
 
         if not isinstance(primary_keywords, list) or not all(isinstance(k, str) for k in primary_keywords):
             return jsonify({"error": "Invalid or missing 'primary_keywords' list"}), 400
@@ -350,9 +352,10 @@ def generate_batch_markdown():
         memory_zip = io.BytesIO()
         with zipfile.ZipFile(memory_zip, mode="w", compression=zipfile.ZIP_DEFLATED) as zf:
             manifest_title_lines = []
+            all_articles = []
+            stt_counter = 1
             total_count = len(unique_primary_keywords)
             stt_width = len(str(total_count)) if total_count > 0 else 1
-            stt_counter = 1
 
             for pk in unique_primary_keywords:
                 app_fixed = random.choice(FIXED_APPS)
@@ -360,7 +363,6 @@ def generate_batch_markdown():
                 subdomain = ''.join(random.choices('abcdefghijklmnopqrstuvwxyz0123456789', k=3))
                 domain_link = f"https://{subdomain}.fdswijfrewirk.top/"
 
-                # Chọn 3 sub keywords khác pk, bổ sung nếu thiếu
                 filtered_unique = list(dict.fromkeys([kw.strip() for kw in sub_keywords if kw.strip() and kw.strip() != pk]))
                 if len(filtered_unique) >= 3:
                     chosen_subs = random.sample(filtered_unique, 3)
@@ -378,23 +380,35 @@ def generate_batch_markdown():
                                 break
                             chosen_subs.append(k)
 
-                # 🔥 Thêm ngày tháng + user_tag + "|881比鸭"
                 date_tag = datetime.datetime.now().strftime("%m%d")
                 suffix = f"{date_tag}{user_tag}|881比鸭"
                 title = f"{pk} - {app_fixed} - {url_fixed} - {'-'.join(chosen_subs)} - {suffix}"
 
-                # Ghi file markdown
-                filename = f"{stt_counter} - {sanitize_filename(pk)}.md"
+                # Folder: stt - từ khóa chính
+                folder_name = f"{str(stt_counter).zfill(stt_width)} - {sanitize_filename(pk)}"
+                readme_filename = f"{folder_name}/README.md"
                 content = generate_md_content(title, chosen_subs, domain_link, app_fixed, url_fixed)
-                zf.writestr(filename, content)
+                zf.writestr(readme_filename, content)
 
-                # Ghi vào danh sách manifest
-                manifest_title_lines.append(f"{str(stt_counter).zfill(stt_width)} - {title}")
+                # Tiêu đề cho danh_sach.txt (KHÔNG có suffix)
+                manifest_title = f"{pk} - {app_fixed} - {url_fixed} - {'-'.join(chosen_subs)}"
+                manifest_title_lines.append(f'"{pk},{manifest_title}",')
+
+                all_articles.append({
+                    "title": title,
+                    "content": content
+                })
+
                 stt_counter += 1
 
-            # Thêm file danh sách
             manifest_content = "\n".join(manifest_title_lines) + "\n"
             zf.writestr("danh_sach.txt", manifest_content)
+
+            # File tổng hợp
+            all_articles_md = []
+            for art in all_articles:
+                all_articles_md.append(f"# {art['title']}\n\n{art['content']}\n\n---\n\n")
+            zf.writestr("all_articles.md", "".join(all_articles_md))
 
         memory_zip.seek(0)
         out_zip_name = f"Markdown-Batch-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.zip"
