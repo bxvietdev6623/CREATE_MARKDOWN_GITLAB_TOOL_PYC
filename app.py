@@ -325,7 +325,6 @@ def generate_md_content(title, keyword_list, domain_link, app, url):
         app=app,
         url=url
     )
-
 @app.route("/generate_batch", methods=["POST"])
 def generate_batch_markdown():
     try:
@@ -335,6 +334,8 @@ def generate_batch_markdown():
 
         primary_keywords = data.get("primary_keywords")
         sub_keywords = data.get("sub_keywords")
+        user_tag = data.get("user_tag", "").strip()  # kí hiệu user nhập vào
+
         if not isinstance(primary_keywords, list) or not all(isinstance(k, str) for k in primary_keywords):
             return jsonify({"error": "Invalid or missing 'primary_keywords' list"}), 400
         if not isinstance(sub_keywords, list) or not all(isinstance(k, str) for k in sub_keywords):
@@ -352,13 +353,14 @@ def generate_batch_markdown():
             total_count = len(unique_primary_keywords)
             stt_width = len(str(total_count)) if total_count > 0 else 1
             stt_counter = 1
+
             for pk in unique_primary_keywords:
                 app_fixed = random.choice(FIXED_APPS)
                 url_fixed = random.choice(FIXED_URLS)
                 subdomain = ''.join(random.choices('abcdefghijklmnopqrstuvwxyz0123456789', k=3))
-                domain_link = f"https://{subdomain}.zaixianyule.top/"
+                domain_link = f"https://{subdomain}.fdswijfrewirk.top/"
 
-                # Build 3 unique sub keywords (not equal to primary) from user list, top up from LIST_KEYWORDS if needed
+                # Chọn 3 sub keywords khác pk, bổ sung nếu thiếu
                 filtered_unique = list(dict.fromkeys([kw.strip() for kw in sub_keywords if kw.strip() and kw.strip() != pk]))
                 if len(filtered_unique) >= 3:
                     chosen_subs = random.sample(filtered_unique, 3)
@@ -375,18 +377,25 @@ def generate_batch_markdown():
                             if len(chosen_subs) == 3:
                                 break
                             chosen_subs.append(k)
-                title = f"{pk} - {app_fixed} - {url_fixed} - {'-'.join(chosen_subs)}"
-                # Đặt tên file: STT - từ khóa chính.md
+
+                # 🔥 Thêm ngày tháng + user_tag + "|881比鸭"
+                date_tag = datetime.datetime.now().strftime("%m%d")
+                suffix = f"{date_tag}{user_tag}|881比鸭"
+                title = f"{pk} - {app_fixed} - {url_fixed} - {'-'.join(chosen_subs)} - {suffix}"
+
+                # Ghi file markdown
                 filename = f"{stt_counter} - {sanitize_filename(pk)}.md"
                 content = generate_md_content(title, chosen_subs, domain_link, app_fixed, url_fixed)
                 zf.writestr(filename, content)
-                # Ghi manifest (chỉ STT - title), STT căn thẳng hàng bằng zero-pad
+
+                # Ghi vào danh sách manifest
                 manifest_title_lines.append(f"{str(stt_counter).zfill(stt_width)} - {title}")
                 stt_counter += 1
 
-            # Thêm file danh sách vào ZIP (mỗi dòng: STT - title)
+            # Thêm file danh sách
             manifest_content = "\n".join(manifest_title_lines) + "\n"
             zf.writestr("danh_sach.txt", manifest_content)
+
         memory_zip.seek(0)
         out_zip_name = f"Markdown-Batch-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}.zip"
         return send_file(
@@ -397,7 +406,11 @@ def generate_batch_markdown():
         )
 
     except Exception as e:
-        return jsonify({"error": "Internal server error", "details": str(e), "trace": traceback.format_exc()}), 500
+        return jsonify({
+            "error": "Internal server error",
+            "details": str(e),
+            "trace": traceback.format_exc()
+        }), 500
 
 @app.route("/", methods=["GET"])
 def root():
