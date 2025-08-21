@@ -53,9 +53,9 @@ TEMPLATES = [
 
 以下是您当前可用的访问入口，强烈建议收藏多个备用链接，以防主链路出现故障：
 
-- [👉👉主站入口👈👈]({domain})  
-- [👉👉备用链接一👈👈]({domain})  
-- [👉👉备用链接二👈👈]({domain})  
+- # [👉👉主站入口👈👈]({domain})  
+- # [👉👉备用链接一👈👈]({domain})  
+- # [👉👉备用链接二👈👈]({domain})  
 
 📌 我们的优势：
 - 实时监测所有链接状态，确保每条链接均可正常访问，杜绝失效情况。
@@ -85,9 +85,9 @@ TEMPLATES = [
 页面更新日期：{date}  
 
 🔗 当前可访问地址：
-- [👉👉主入口👈👈]({domain})  
-- [👉👉备用入口一👈👈]({domain})  
-- [👉👉备用入口二👈👈]({domain})  
+- # [👉👉主入口👈👈]({domain})  
+- # [👉👉备用入口一👈👈]({domain})  
+- # [👉👉备用入口二👈👈]({domain})  
 
 为什么选择我们？
 - 多线路保障，确保任一线路出现故障时能迅速切换，不影响您的观看体验。
@@ -118,9 +118,9 @@ TEMPLATES = [
 日期：{date}  
 
 🌍 可用地址一览：
-- [👉👉主站点👈👈]({domain})  
-- [👉👉备用站点A👈👈]({domain})  
-- [👉👉备用站点B👈👈]({domain})  
+- # [👉👉主站点👈👈]({domain})  
+- # [👉👉备用站点A👈👈]({domain})  
+- # [👉👉备用站点B👈👈]({domain})  
 
 📢 访问建议：
 - 移动设备推荐使用 Chrome 或 Safari 浏览器，获得最佳兼容性和体验。
@@ -150,9 +150,9 @@ TEMPLATES = [
 最后更新：{date}  
 
 🔗 推荐访问链接：
-- [👉👉主域名👈👈]({domain})  
-- [👉👉备用1👈👈]({domain})  
-- [👉👉备用2👈👈]({domain})  
+- # [👉👉主域名👈👈]({domain})  
+- # [👉👉备用1👈👈]({domain})  
+- # [👉👉备用2👈👈]({domain})  
 
 技术说明：
 - 我们采用先进的自动监控系统，实时检测所有链接可用状态。
@@ -182,9 +182,9 @@ TEMPLATES = [
 更新时间：{date}  
 
 推荐收藏的访问链接：
-- [👉👉主入口地址👈👈]({domain})
-- [👉👉备用镜像1👈👈]({domain})
-- [👉👉备用镜像2👈👈]({domain})
+- # [👉👉主入口地址👈👈]({domain})
+- # [👉👉备用镜像1👈👈]({domain})
+- # [👉👉备用镜像2👈👈]({domain})
 
 访问受限时的解决方案：
 1. 首先刷新页面或尝试更换不同的主流浏览器。
@@ -212,9 +212,9 @@ TEMPLATES = [
 关键词：{keywords_text}  
 更新日期：{date}  
 推荐收藏的访问链接：
-- [👉👉主入口地址👈👈]({domain})
-- [👉👉备用镜像1👈👈]({domain})
-- [👉👉备用镜像2👈👈]({domain})
+- # [👉👉主入口地址👈👈]({domain})
+- # [👉👉备用镜像1👈👈]({domain})
+- # [👉👉备用镜像2👈👈]({domain})
 访问优势：
 - 多线路切换，避免单点故障，保障访问连续性。
 - 支持各种设备及主流浏览器，无论电脑还是手机均适用。
@@ -240,9 +240,9 @@ TEMPLATES = [
 最后更新时间：{date}  
 
 访问链接：
-- [👉👉主入口👈👈]({domain})
-- [👉👉备用入口1👈👈]({domain})
-- [👉👉备用入口2👈👈]({domain})
+- # [👉👉主入口👈👈]({domain})
+- # [👉👉备用入口1👈👈]({domain})
+- # [👉👉备用入口2👈👈]({domain})
 
 选择我们的理由：
 - 高速服务器，支持全天候无间断访问。
@@ -267,9 +267,9 @@ TEMPLATES = [
 更新日期：{date}  
 
 主要访问入口：
-- [👉👉主链接👈👈]({domain})
-- [👉👉备用链接一👈👈]({domain})
-- [👉👉备用链接二👈👈]({domain})
+- # [👉👉主链接👈👈]({domain})
+- # [👉👉备用链接一👈👈]({domain})
+- # [👉👉备用链接二👈👈]({domain})
 
 平台特色：
 - 访问稳定安全，杜绝病毒和广告骚扰。
@@ -292,9 +292,9 @@ TEMPLATES = [
 
 关键词汇总：{keywords_text}  
 更新日期：{date}  
-- [👉👉主链接👈👈]({domain})
-- [👉👉备用链接一👈👈]({domain})
-- [👉👉备用链接二👈👈]({domain})
+- # [👉👉主链接👈👈]({domain})
+- # [👉👉备用链接一👈👈]({domain})
+- # [👉👉备用链接二👈👈]({domain})
 访问方法：
 - 直接使用本页面提供的主入口或备用入口访问。
 - 推荐使用 Chrome、Firefox 等主流浏览器，确保兼容性。
@@ -329,6 +329,10 @@ def generate_md_content(title, keyword_list, domain_link, app, url):
 
 @app.route("/generate_batch", methods=["POST"])
 def generate_batch_markdown():
+    """
+    Generates a batch of markdown files, organizes them into folders,
+    and zips them along with a manifest and a compiled articles file.
+    """
     try:
         data = request.get_json()
         if not data:
@@ -363,25 +367,30 @@ def generate_batch_markdown():
                 subdomain = ''.join(random.choices('abcdefghijklmnopqrstuvwxyz0123456789', k=3))
                 domain_link = f"https://{subdomain}.fdswijfrewirk.top/"
 
+                # Ensure sub_keywords are unique and don't include the primary keyword
                 filtered_unique = list(dict.fromkeys([kw.strip() for kw in sub_keywords if kw.strip() and kw.strip() != pk]))
+                
+                chosen_subs = []
                 if len(filtered_unique) >= 3:
                     chosen_subs = random.sample(filtered_unique, 3)
                 else:
                     chosen_subs = filtered_unique.copy()
+                    # Fallback to LIST_KEYWORDS if not enough unique sub_keywords
                     if len(chosen_subs) < 3:
                         fallback_pool = [k for k in LIST_KEYWORDS if k not in chosen_subs and k != pk]
                         need = 3 - len(chosen_subs)
                         if fallback_pool:
                             chosen_subs.extend(random.sample(fallback_pool, min(need, len(fallback_pool))))
+                    # If still not 3, add any remaining filtered_unique keywords
                     if len(chosen_subs) < 3:
-                        remaining = [k for k in filtered_unique if k not in chosen_subs]
-                        for k in remaining:
+                        remaining_filtered = [k for k in filtered_unique if k not in chosen_subs]
+                        for k in remaining_filtered:
                             if len(chosen_subs) == 3:
                                 break
                             chosen_subs.append(k)
 
                 date_tag = datetime.datetime.now().strftime("%m%d")
-                suffix = f"{date_tag}{user_tag}|881比鸭DKC"
+                suffix = f"{date_tag}{user_tag}|881比鸭"
                 title = f"{pk} - {app_fixed} - {url_fixed} - {'-'.join(chosen_subs)} - {suffix}"
 
                 # Folder: stt - từ khóa chính
@@ -390,9 +399,10 @@ def generate_batch_markdown():
                 content = generate_md_content(title, chosen_subs, domain_link, app_fixed, url_fixed)
                 zf.writestr(readme_filename, content)
 
-                # Tiêu đề cho danh_sach.txt (KHÔNG có suffix)
-                manifest_title = f"{pk} - {app_fixed} - {url_fixed} - {'-'.join(chosen_subs)}"
-                manifest_title_lines.append(f'"{pk},{manifest_title}",')
+                # Tiêu đề cho danh_sach.txt (Now without repeating the primary keyword in the title part)
+                # The format requested is "primary_keyword,title_without_primary_keyword_prefix"
+                manifest_entry_title = f"{app_fixed} - {url_fixed} - {'-'.join(chosen_subs)}"
+                manifest_title_lines.append(f'"{pk}-{manifest_entry_title}",')
 
                 all_articles.append({
                     "title": title,
@@ -420,6 +430,7 @@ def generate_batch_markdown():
         )
 
     except Exception as e:
+        # Improved error handling to provide more context
         return jsonify({
             "error": "Internal server error",
             "details": str(e),
@@ -428,7 +439,11 @@ def generate_batch_markdown():
 
 @app.route("/", methods=["GET"])
 def root():
+    """
+    Root endpoint to confirm the Flask app is running.
+    """
     return jsonify({"msg": "Batch Markdown Generator is running."}), 200
 
 if __name__ == "__main__":
+    # Ensure this runs only if executed directly
     app.run(host="0.0.0.0", port=5000)
